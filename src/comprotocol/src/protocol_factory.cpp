@@ -23,10 +23,26 @@ std::unique_ptr<Frame> ProtocolFactory::parseFrame(const std::vector<uint8_t>& d
     if (len >= 5) {
         uint8_t p3 = data[7];  // 3 (header) + 4 (CLA,INS,P1,P2) + 1 (P3)
         if (len == p3 + 5) {
-            std::unique_ptr<CommandFrame> frame(new CommandFrame());
-            frame->deserialize(data);
-            return frame;
+            return parseCommand(data);
         }
+    }
+    
+    return parseResponse(data);
+}
+
+std::unique_ptr<CommandFrame> ProtocolFactory::parseCommand(const std::vector<uint8_t>& data) {
+    if (data.size() < 8) {  // Minimum size for a command frame
+        throw ProtocolError("Data too short to be a valid command frame");
+    }
+    
+    std::unique_ptr<CommandFrame> frame(new CommandFrame());
+    frame->deserialize(data);
+    return frame;
+}
+
+std::unique_ptr<ResponseFrame> ProtocolFactory::parseResponse(const std::vector<uint8_t>& data) {
+    if (data.size() < 5) {  // Minimum size for a response frame
+        throw ProtocolError("Data too short to be a valid response frame");
     }
     
     std::unique_ptr<ResponseFrame> frame(new ResponseFrame());

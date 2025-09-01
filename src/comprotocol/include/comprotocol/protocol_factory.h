@@ -16,6 +16,10 @@ public:
                                                        uint16_t sw);
                                                        
     static std::unique_ptr<Frame> parseFrame(const std::vector<uint8_t>& data);
+    
+    static std::unique_ptr<CommandFrame> parseCommand(const std::vector<uint8_t>& data);
+    
+    static std::unique_ptr<ResponseFrame> parseResponse(const std::vector<uint8_t>& data);
 };
 
 } // namespace comprotocol

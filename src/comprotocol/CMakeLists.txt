@@ -6,6 +6,7 @@ add_library(comprotocol STATIC
     ${CMAKE_CURRENT_SOURCE_DIR}/src/response_frame.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/protocol_factory.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/comprotocol.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/comprotocolC.cpp
 
 )
 
